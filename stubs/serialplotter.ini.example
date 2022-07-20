@@ -1,0 +1,8 @@
+[general]
+port=COM10
+baud_rate=115200
+
+[processing]
+column_separator=;
+value_separator==
+line_separator=LF

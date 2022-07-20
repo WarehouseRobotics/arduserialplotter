@@ -1,0 +1,31 @@
+<html style="background: rgb(33, 37, 41)">
+    <head>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css" crossorigin="anonymous">
+        <script src="{jquery.js}" crossorigin="anonymous"></script>
+        <script src="{bootstrap.js}" crossorigin="anonymous"></script>
+        <script src="{canvasjs.js}" crossorigin="anonymous" referrerpolicy="no-referrer"></script>        
+	</head>
+	<body style="background: rgb(33, 37, 41)">
+	<div class='container-fluid'>
+        <div class="row">
+            <div class="col-sm" style="margin-top: 16px;">
+                <button class="btn btn-primary btn-sm" onclick="reopenPort()">Reopen {portName}</button>
+                &nbsp;
+                <button class="btn btn-warning btn-sm" onclick="truncateData()">Truncate Data</button>
+                &nbsp;
+                <button class="btn btn-secondary btn-sm" id="pauseButton" onclick="pauseRecording()">Pause Recording</button>
+            </div>
+        </div>
+		<div class='row'>
+			<div class='col-sm'>
+                <div id="chartContainer" style='width: 100%; height: 540px; margin: 12px 0'></div>
+			</div>
+		</div>
+        <div class='row'>
+            <div class="col-sm" style="margin-bottom: 10px;">
+                <textarea class="form-control" id="textLog" style="width: 100%; height: 400px" readonly></textarea>
+            </div>            
+        </div>
+	</div>
+    <script src="{app.js}" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+</body></html>
