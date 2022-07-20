@@ -1,11 +1,12 @@
 {
 	"name": "arduserialplotter",
 	"displayName": "ArduSerialPlotter",
-	"description": "Serial plotter for rendering MCU serial output as plots",
+	"description": "Serial plotter for rendering MCU serial output as plots",	
 	"version": "0.0.1",
 	"engines": {
 		"vscode": "^1.69.0"
 	},
+	"repository": "https://github.com/WarehouseRobotics/arduserialplotter",
 	"categories": [
 		"Other"
 	],
