@@ -6,3 +6,7 @@ baud_rate=115200
 column_separator=;
 value_separator==
 line_separator=LF
+
+[chart]
+window_size_points=1000
+max_points=25000

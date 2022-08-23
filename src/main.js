@@ -10,6 +10,8 @@ const SerialPort = require("serialport").SerialPort;
 let panelDisposed = false;
 let serialPort = null;
 
+let serialDataBuffer = "";
+
 function getPage(context, panel) {
 	const onDiskPath = (file) => { 
 		console.log("path", path);
@@ -52,7 +54,31 @@ function initSerial(context, webview) {
 
 	if (serialPort) {
 		serialPort.on('data', function(data) { 
-			processSerialData(context, config, webview, data)		
+			const hasLineSeparators = data.indexOf(config.processing.line_separator) > -1;
+
+			if (hasLineSeparators) {
+				// Does it end with a separator?
+				const expectedEndingLength = config.processing.line_separator.length;
+				let dataEnding;
+
+				if (data.length > expectedEndingLength.length) {
+					const dataEnding = data.substring(data.length - expectedEndingLength, data.length - 1);
+				} 
+
+				if (dataEnding == config.processing.line_separator) {
+					serialDataBuffer += data;
+					processSerialData(context, config, webview, serialDataBuffer)		
+					serialDataBuffer = "";
+				} else { // If the last line has no terminator at the end, leave it in the buffer and don't process
+					serialDataBuffer += data;
+					let lines = serialDataBuffer.split(config.processing.line_separator);
+					const lastLine = lines.splice(lines.length - 1, 1)				
+					processSerialData(context, config, webview, lines.join(config.processing.line_separator))							
+					serialDataBuffer = lastLine[0];
+				}								
+			} else {
+				serialDataBuffer += data;
+			}
 		});
 
 		serialPort.on('disconnected', function(data) { 
@@ -152,6 +178,8 @@ function onCreateConfigCommand(context) {
 function processSerialData(context, config, webview, data) {
 	// Assume string format 
 	const dataString = String(data);
+
+	console.log("DATA:", dataString);
 
 	const lines = dataString.split(config.processing.line_separator);
 	const numLines = lines.length;
